@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>計算練習</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>計算練習</h1>
+  </header>
+
+  <section id="flex">
+    <div id="Math" class="Math"></div>
+
+    <div class="checklist">
+      <label><input type="checkbox" id="10digit">10の位を統一する</label>
+      <label><input type="checkbox" id="1digit">1の位を統一する</label>
+      <label><input type="checkbox" id="sum">一の位の和を10にする</label>
+    </div>
+
+    <div id="textarea">
+      <div id="textDiv">
+        <label><input type="text" placeholder="回答するには開始してください…" id="StartTxt" disabled></label>
+      </div>
+      <div id="buttonDiv">
+        <button id="StartBtn">開始</button>
+      </div>
+    </div>
+  </section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const mathDiv = document.getElementById("Math");
+  let correctAnswer = null; // ← 正解を保存する変数を追加
+
+  // 問題生成関数
+  function generateProblem() {
+    const tenDC = document.getElementById("10digit").checked;
+    const oneDC = document.getElementById("1digit").checked;
+    const sumTOC = document.getElementById("sum").checked;
+
+    let newFormula = "";
+    let num1, num2, num1s10, num2s10, num1s1, num2s1;
+
+    if (!tenDC && !oneDC && !sumTOC) {
+      num1 = Math.floor(Math.random() * 89) + 10;
+      num2 = Math.floor(Math.random() * 89) + 10;
+    } else if (!tenDC && !oneDC && sumTOC) {
+      num1s10 = Math.floor(Math.random() * 8) + 1;
+      num2s10 = Math.floor(Math.random() * 8) + 1;
+      num1s1 = Math.floor(Math.random() * 8) + 1;
+      num2s1 = Math.abs(10 - num1s1);
+      num1 = 10 * num1s10 + num1s1;
+      num2 = 10 * num2s10 + num2s1;
+    } else if (!tenDC && oneDC && !sumTOC) {
+      num1s10 = Math.floor(Math.random() * 8) + 1;
+      num2s10 = Math.floor(Math.random() * 8) + 1;
+      num1s1 = Math.floor(Math.random() * 8) + 1;
+      num2s1 = num1s1;
+      num1 = 10 * num1s10 + num1s1;
+      num2 = 10 * num2s10 + num2s1;
+    } else if (!tenDC && oneDC && sumTOC) {
+      num1s10 = Math.floor(Math.random() * 8) + 1;
+      num2s10 = Math.floor(Math.random() * 8) + 1;
+      num1s1 = 5;
+      num2s1 = 5;
+      num1 = 10 * num1s10 + num1s1;
+      num2 = 10 * num2s10 + num2s1;
+    } else if (tenDC && !oneDC && !sumTOC) {
+      num1s10 = Math.floor(Math.random() * 8) + 1;
+      num2s10 = num1s10;
+      num1s1 = Math.floor(Math.random() * 8) + 1;
+      num2s1 = Math.floor(Math.random() * 8) + 1;
+      num1 = 10 * num1s10 + num1s1;
+      num2 = 10 * num2s10 + num2s1;
+    } else if (tenDC && !oneDC && sumTOC) {
+      num1s10 = Math.floor(Math.random() * 8) + 1;
+      num2s10 = num1s10;
+      num1s1 = Math.floor(Math.random() * 8) + 1;
+      num2s1 = Math.abs(10 - num1s1);
+      num1 = 10 * num1s10 + num1s1;
+      num2 = 10 * num2s10 + num2s1;
+    } else if (tenDC && oneDC && !sumTOC) {
+      num1 = Math.floor(Math.random() * 89) + 10;
+      num2 = num1;
+    } else if (tenDC && oneDC && sumTOC) {
+      num1s10 = Math.floor(Math.random() * 8) + 1;
+      num2s10 = num1s10;
+      num1s1 = 5;
+      num2s1 = 5;
+      num1 = 10 * num1s10 + num1s1;
+      num2 = 10 * num2s10 + num2s1;
+    }
+
+    correctAnswer = num1 * num2; // ← 正解をここで保存！
+    newFormula = `\\[${num1} \\times ${num2}\\]`;
+
+    mathDiv.textContent = newFormula;
+    MathJax.typesetPromise([mathDiv]);
+  }
+
+  // Startボタン初回クリック
+  document.getElementById("StartBtn").addEventListener("click", () => {
+    generateProblem();
+
+    // ボタンを「回答」に置き換え
+    const buttonDiv = document.getElementById("buttonDiv");
+    buttonDiv.innerHTML = '<button id="AnsBtn">回答</button>';
+    const textDiv = document.getElementById("textDiv");
+    textDiv.innerHTML = '<label><input type="text" placeholder="回答を入力" id="AnsTxt" autofocus></label>';
+
+    // 回答ボタンでもチェックして次へ
+    document.getElementById("AnsBtn").addEventListener("click", checkAnswer);
+
+    // Enterキーでも同じ処理を呼ぶ
+    document.addEventListener("keydown", (e) => {
+      const input = document.getElementById("AnsTxt");
+      if (document.activeElement === input && e.key === "Enter") {
+        checkAnswer();
+      }
+    });
+
+    // 共通の処理を関数化しておくと便利
+    function checkAnswer() {
+      const input = document.getElementById("AnsTxt");
+      const answer = Number(input.value);
+      const textDiv = document.getElementById("textDiv");
+      let errorMsg = document.getElementById("errorMsg");
+
+      if (answer === correctAnswer) {
+        textDiv.innerHTML = '<label><input type="text" placeholder="回答を入力" id="AnsTxt"></label>';
+        generateProblem();
+        document.getElementById("AnsTxt").focus();
+      } else {
+        // もしエラーメッセージがなければ作成
+        if (!errorMsg) {
+          errorMsg = document.createElement("div");
+          errorMsg.id = "errorMsg";
+          errorMsg.textContent = "不正解！";
+          textDiv.appendChild(errorMsg);
+        }
+
+        // 赤枠・揺れ・エラーメッセージを表示
+        input.classList.add("error-border", "shake");
+        errorMsg.classList.add("show");
+
+        // 0.5秒後にリセット
+        setTimeout(() => {
+          input.classList.remove("error-border", "shake");
+          errorMsg.classList.remove("show");
+          input.value = "";
+          input.focus();
+        }, 500);
+      }
+    }
+
+  });
+});
+</script>
+</body>
+</html>

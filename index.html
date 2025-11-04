@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>計算練習</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>計算練習</h1>
+  </header>
+
+  <section id="flex">
+    <div id="Math" class="Math"></div>
+
+
+    <div class="checklist">
+      <label><input type="checkbox" id="10digit">10の位を統一する</label>
+      <label><input type="checkbox" id="1digitandsum">1の位を統一して10の位の和を10にする</label>
+      <label><input type="checkbox" id="sum">1の位の和を10にする</label>
+    </div>
+  </section>
+  <div id="timer">⌛00:00</div>
+  <section id="flex">
+    <div id="textarea">
+      <div id="textDiv">
+        <label><input type="text" placeholder="回答するには開始してください…" id="StartTxt" disabled></label>
+      </div>
+      <div id="buttonDiv">
+        <button id="StartBtn">開始</button>
+      </div>
+      <div id="ansSBtnDiv">
+      </div>
+    </div>
+  </section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const mathDiv = document.getElementById("Math");
+  const timerDiv = document.getElementById("timer");
+  let correctAnswer = null;
+  let missCount = 0;
+  let timer = null;
+  let elapsedSeconds = 0;
+
+  // タイマーを開始する関数
+  function startTimer() {
+    if (timer) return; // 二重起動防止
+    timer = setInterval(() => {
+      elapsedSeconds++;
+      const minutes = String(Math.floor(elapsedSeconds / 60)).padStart(2, "0");
+      const seconds = String(elapsedSeconds % 60).padStart(2, "0");
+      timerDiv.textContent = `⌛${minutes}:${seconds}`;
+    }, 1000);
+  }
+
+  // 問題生成関数
+  function generateProblem() {
+    const tenDC = document.getElementById("10digit").checked;
+    const oneDaSC = document.getElementById("1digitandsum").checked;
+    const sumTOC = document.getElementById("sum").checked;
+
+    let newFormula = "";
+    let num1, num2, num1s10, num2s10, num1s1, num2s1;
+
+    if (tenDC && oneDaSC) {
+      num1s10 = 5;
+      num2s10 = 5;
+    } else if (tenDC) {
+      num1s10 = Math.floor(Math.random() * 8) + 1;
+      num2s10 = num1s10;
+    } else if (oneDaSC) {
+      num1s10 = Math.floor(Math.random() * 8) + 1;
+      num2s10 = Math.abs(10 - num1s10);
+    } else {
+      num1s10 = Math.floor(Math.random() * 8) + 1;
+      num2s10 = Math.floor(Math.random() * 8) + 1;
+    }
+
+    if (oneDaSC && sumTOC) {
+      num1s1 = 5;
+      num2s1 = 5;
+    } else if (oneDaSC) {
+      num1s1 = Math.floor(Math.random() * 8) + 1;
+      num2s1 = num1s1;
+    } else if (sumTOC) {
+      num1s1 = Math.floor(Math.random() * 8) + 1;
+      num2s1 = Math.abs(10 - num1s1);
+    } else {
+      num1s1 = Math.floor(Math.random() * 8) + 1;
+      num2s1 = Math.floor(Math.random() * 8) + 1;
+    }
+
+    num1 = 10 * num1s10 + num1s1;
+    num2 = 10 * num2s10 + num2s1;
+
+    correctAnswer = num1 * num2;
+    newFormula = `\\[${num1} \\times ${num2}\\]`;
+
+    mathDiv.textContent = newFormula;
+    MathJax.typesetPromise([mathDiv]);
+
+    missCount = 0;
+    const answerBtn = document.getElementById("showAnswerBtn");
+    if (answerBtn) answerBtn.remove();
+  }
+
+  // Startボタン
+  document.getElementById("StartBtn").addEventListener("click", () => {
+    generateProblem();
+    startTimer(); // ← 開始時にタイマー起動！
+
+    const buttonDiv = document.getElementById("buttonDiv");
+    buttonDiv.innerHTML = '<button id="AnsBtn">回答</button>';
+    const textDiv = document.getElementById("textDiv");
+    textDiv.innerHTML = '<label><input type="text" placeholder="回答を入力" id="AnsTxt" autofocus></label>';
+
+    document.getElementById("AnsBtn").addEventListener("click", checkAnswer);
+
+    document.addEventListener("keydown", (e) => {
+      const input = document.getElementById("AnsTxt");
+      if (document.activeElement === input && e.key === "Enter") {
+        checkAnswer();
+      }
+    });
+
+    function checkAnswer() {
+      const input = document.getElementById("AnsTxt");
+      const answer = Number(input.value);
+      const textDiv = document.getElementById("textDiv");
+      const ansSBtnDiv = document.getElementById("ansSBtnDiv");
+      let errorMsg = document.getElementById("errorMsg");
+
+      if (answer === correctAnswer) {
+        missCount = 0;
+        textDiv.innerHTML = '<label><input type="text" placeholder="回答を入力" id="AnsTxt"></label>';
+        const sound = new Audio("correct.mp3");
+        sound.play();
+        generateProblem();
+        document.getElementById("AnsTxt").focus();
+      } else {
+        missCount++;
+        if (!errorMsg) {
+          errorMsg = document.createElement("div");
+          errorMsg.id = "errorMsg";
+          errorMsg.textContent = "不正解！";
+          textDiv.appendChild(errorMsg);
+        }
+
+        const sound = new Audio("incorrect.mp3");
+        sound.play();
+        input.classList.add("error-border", "shake");
+        errorMsg.classList.add("show");
+
+        setTimeout(() => {
+          input.classList.remove("error-border", "shake");
+          errorMsg.classList.remove("show");
+          input.value = "";
+          input.focus();
+        }, 500);
+
+        if (missCount === 3 && !document.getElementById("showAnswerBtn")) {
+          ansSBtnDiv.innerHTML = '<button id="ansSBtn">答え</button>';
+          document.getElementById("ansSBtn").addEventListener("click", () => {
+            alert(`答えは ${correctAnswer} です！`);
+            generateProblem();
+            ansSBtnDiv.innerHTML = '';
+            missCount = 0;
+          });
+        }
+      }
+    }
+  });
+});
+
+</script>
+</body>
+</html>

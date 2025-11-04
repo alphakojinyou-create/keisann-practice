@@ -1,0 +1,167 @@
+@font-face {
+  font-family: "Asana Math";
+  src: url("./Asana-Math.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* ヘッダー */
+header {
+  display: flex;
+  align-items: center;
+  background-color: #48d1cc;
+  color: #fff;
+  font-family: fantasy;
+  font-size: 20px;
+  height: 70px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-left: 20px;
+}
+
+/* 全体レイアウト */
+body {
+  margin: 0;
+  background-color: #fff;
+  color: #222;
+  font-family: sans-serif;
+}
+
+#flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 120px;
+}
+
+/* 数式部分 */
+.Math {
+  color: #fff;
+  background-color: #222;
+  padding: 30px 50px;
+  font-size: 50px;
+  font-family: "Asana Math", serif;
+  margin-bottom: 40px;
+}
+
+/* チェックリスト */
+.checklist {
+  flex-direction: column;
+  gap: 10px;
+  font-size: 24px;
+}
+
+.checklist input[type="checkbox"] {
+  transform: scale(1.4);
+  margin-right: 10px;
+}
+
+#textarea {
+  display: flex;              /* 横並びにする！ */
+  justify-content: center;    /* 中央寄せ */
+  align-items: center;        /* 縦方向の中央揃え */
+  gap: 20px;                  /* テキスト欄とボタンの間の余白 */
+  padding-top: 70px;
+  width: 100%;                /* セクションいっぱいに広げる */
+  font-size: 20px;
+}
+
+
+#textarea input[type="text"] {
+  width: 400px;        /* 横幅 */
+  height: 50px;        /* 高さ */
+  font-size: 25px;     /* 文字サイズ */
+  padding-top: 10px;
+  padding-left: 10px;
+  box-sizing: border-box; /* padding込みでサイズ固定 */
+  font-family: "Asana Math", serif;
+}
+
+
+#StartBtn {
+  background-color: #1d50a2;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  height: 50px;
+  width: 80px;
+  font-size: 25px;
+}
+#StartBtn:active {
+  background-color: #123266;
+}
+#AnsBtn {
+  background-color: #b60033;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  height: 50px;
+  width: 80px;
+  font-size: 25px;
+}
+#AnsBtn:active {
+  background-color: #96022b;
+}
+
+/* 不正解アニメーション */
+.error-border {
+  border: 2px solid red !important;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+
+/* 「不正解！」表示の位置と見た目 */
+#errorMsg {
+  position: absolute;
+  top: 55px;            /* テキストボックスのすぐ下に配置 */
+  left: 5px;
+  color: red;
+  font-weight: bold;
+  font-size: 18px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+#errorMsg.show {
+  opacity: 1;
+}
+
+#textDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 左寄せ！ */
+  position: relative;
+}
+
+#ansSBtn {
+  background-color: #1d50a2;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  height: 50px;
+  width: 80px;
+  font-size: 25px;
+}
+#ansSBtn:active {
+  background-color: #123266;
+}
+
+#timer {
+  justify-self: center;
+  font-size: 25px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  padding-top: 50px;
+  color: #f49d43;
+}
