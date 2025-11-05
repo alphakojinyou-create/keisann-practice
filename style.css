@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Asana Math";
-  src: url("./Asana-Math.otf") format("opentype");
+  src: url("/Asana-Math.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
@@ -78,6 +78,10 @@ body {
   padding-left: 10px;
   box-sizing: border-box; /* padding込みでサイズ固定 */
   font-family: "Asana Math", serif;
+}
+
+#AnsTxt {
+  padding-bottom: 70px;
 }
 
 
@@ -167,3 +171,4 @@ body {
   color: #f49d43;
 
 }
+
