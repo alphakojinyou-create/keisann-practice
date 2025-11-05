@@ -67,6 +67,7 @@ body {
   width: 100%;                /* セクションいっぱいに広げる */
   font-size: 20px;
   padding-bottom: 70px;
+  margin-top: 70px;
 }
 
 
@@ -78,7 +79,6 @@ body {
   padding-left: 10px;
   box-sizing: border-box; /* padding込みでサイズ固定 */
   font-family: "Asana Math", serif;
-  margin-top: 70px;
 }
 
 #StartBtn {
@@ -167,5 +167,6 @@ body {
   color: #f49d43;
 
 }
+
 
 
