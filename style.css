@@ -66,6 +66,7 @@ body {
   padding-top: 70px;
   width: 100%;                /* セクションいっぱいに広げる */
   font-size: 20px;
+  padding-bottom: 70px;
 }
 
 
@@ -164,4 +165,5 @@ body {
   font-weight: 500;
   padding-top: 50px;
   color: #f49d43;
+
 }
