@@ -78,12 +78,8 @@ body {
   padding-left: 10px;
   box-sizing: border-box; /* padding込みでサイズ固定 */
   font-family: "Asana Math", serif;
+  margin-top: 70px;
 }
-
-#AnsTxt {
-  padding-bottom: 70px;
-}
-
 
 #StartBtn {
   background-color: #1d50a2;
@@ -171,4 +167,5 @@ body {
   color: #f49d43;
 
 }
+
 
