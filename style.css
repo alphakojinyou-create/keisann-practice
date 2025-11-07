@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Asana Math";
-  src: url("/Asana-Math.otf") format("opentype");
+  src: url("./Asana-Math.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
@@ -66,8 +66,6 @@ body {
   padding-top: 70px;
   width: 100%;                /* セクションいっぱいに広げる */
   font-size: 20px;
-  padding-bottom: 70px;
-  margin-top: 70px;
 }
 
 
@@ -80,6 +78,7 @@ body {
   box-sizing: border-box; /* padding込みでサイズ固定 */
   font-family: "Asana Math", serif;
 }
+
 
 #StartBtn {
   background-color: #1d50a2;
@@ -165,8 +164,291 @@ body {
   font-weight: 500;
   padding-top: 50px;
   color: #f49d43;
+}
+
+@media screen and (min-width: 768px) and (max-width: 960px) {
+  /* ヘッダー */
+  header {
+    font-size: 15px;
+    height: 50px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding-left: 20px;
+  }
+
+  #flex {
+    margin-top: 120px;
+  }
+
+  /* 数式部分 */
+  .Math {
+    padding: 30px 50px;
+    font-size: 50px;
+    margin-bottom: 40px;
+  }
+
+  /* チェックリスト */
+  .checklist {
+    gap: 10px;
+    font-size: 24px;
+  }
+
+  .checklist input[type="checkbox"] {
+    transform: scale(1.4);
+    margin-right: 10px;
+  }
+
+  #textarea {
+    gap: 20px;                  /* テキスト欄とボタンの間の余白 */
+    padding-top: 70px;
+    font-size: 20px;
+  }
+
+  #textarea input[type="text"] {
+    width: 400px;
+    height: 50px;
+    font-size: 25px;
+    padding-top: 10px;
+    padding-left: 10px;
+  }
+
+
+  #StartBtn {
+    height: 50px;
+    width: 80px;
+    font-size: 25px;
+  }
+
+  #AnsBtn {
+    border-radius: 5px;
+    height: 50px;
+    width: 80px;
+    font-size: 25px;
+  }
+
+  /* 「不正解！」表示の位置と見た目 */
+  #errorMsg {
+    position: absolute;
+    top: 55px;
+    left: 5px;
+    font-size: 18px;
+  }
+
+  #textDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  #ansSBtn {
+    height: 50px;
+    width: 80px;
+    font-size: 25px;
+  }
+
+  #timer {
+    justify-self: center;
+    font-size: 25px;
+    font-weight: 500;
+    padding-top: 50px;
+  }
+
+  .checklist#clear {
+    padding: 20px 10px;
+    display: grid;
+  }
 
 }
 
+@media screen and (min-width: 601px) and (max-width: 767px) {
+  /* ヘッダー */
+  header {
+    font-size: 15px;
+    height: 50px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding-left: 20px;
+  }
+
+  #flex {
+    margin-top: 120px;
+  }
+
+  /* 数式部分 */
+  .Math {
+    padding: 30px 50px;
+    font-size: 50px;
+    margin-bottom: 40px;
+  }
+
+  /* チェックリスト */
+  .checklist {
+    gap: 10px;
+    font-size: 24px;
+  }
+
+  .checklist input[type="checkbox"] {
+    transform: scale(1.4);
+    margin-right: 10px;
+  }
+
+  #textarea {
+    gap: 20px;                  /* テキスト欄とボタンの間の余白 */
+    padding-top: 70px;
+    font-size: 20px;
+  }
+
+  #textarea input[type="text"] {
+    width: 400px;
+    height: 50px;
+    font-size: 25px;
+    padding-top: 10px;
+    padding-left: 10px;
+  }
 
 
+  #StartBtn {
+    height: 50px;
+    width: 80px;
+    font-size: 25px;
+  }
+
+  #AnsBtn {
+    border-radius: 5px;
+    height: 50px;
+    width: 80px;
+    font-size: 25px;
+  }
+
+  /* 「不正解！」表示の位置と見た目 */
+  #errorMsg {
+    position: absolute;
+    top: 55px;
+    left: 5px;
+    font-size: 18px;
+  }
+
+  #textDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  #ansSBtn {
+    height: 50px;
+    width: 80px;
+    font-size: 25px;
+  }
+
+  #timer {
+    justify-self: center;
+    font-size: 25px;
+    font-weight: 500;
+    padding-top: 50px;
+  }
+
+  .checklist#clear {
+    padding: 20px 10px;
+    display: grid;
+  }
+}
+
+
+@media screen and (max-width: 600px)  {
+  /* ヘッダー */
+  header {
+    font-size: 10px;
+    height: 35px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding-left: 10px;
+  }
+
+  #flex {
+    margin-top: 60px;
+  }
+
+  /* 数式部分 */
+  .Math {
+    padding: 15px 25px;
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
+
+  /* チェックリスト */
+  .checklist {
+    gap: 5px;
+    font-size: 12px;
+  }
+
+  .checklist input[type="checkbox"] {
+    transform: scale(0.7);
+    margin-right: 5px;
+  }
+
+  #textarea {
+    gap: 10px;                  /* テキスト欄とボタンの間の余白 */
+    padding-top: 35px;
+    font-size: 10px;
+  }
+
+  #textarea input[type="text"] {
+    width: 200px;
+    height: 25px;
+    font-size: 12.5px;
+    padding-top: 5px;
+    padding-left: 5px;
+  }
+
+
+  #StartBtn {
+    height: 25px;
+    width: 40px;
+    font-size: 12.5px;
+  }
+
+  #AnsBtn {
+    border-radius: 2.5px;
+    height: 25px;
+    width: 40px;
+    font-size: 12.5px;
+  }
+
+  /* 「不正解！」表示の位置と見た目 */
+  #errorMsg {
+    position: absolute;
+    top: 27.5px;
+    left: 2.5px;
+    font-size: 9px;
+  }
+
+  #textDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  #ansSBtn {
+    height: 25px;
+    width: 40px;
+    font-size: 12.5px;
+  }
+
+  #timer {
+    justify-self: center;
+    font-size: 12.5px;
+    font-weight: 250;
+    padding-top: 25px;
+  }
+
+  .checklist#clear {
+    padding: 10px 5px;
+    display: grid;
+  }
+}
